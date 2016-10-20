@@ -7,20 +7,28 @@ from numpy import arange, dtype
 
 #Declare empty array for storing csv data
 v1 = []
+v2 = []
+v3 = []
+v4 = []
+v5 = []
+v6 = []
+v7 = []
+v8 = []
+v9 = []
 
 f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 
 for line in f[1:]:
     fields = line.split(',')
     v1.append(fields[0]) #TimeStamp
-    v1.append(float(fields[1]))#Azimuth
-    v1.append(float(fields[2]))#Elevation
-    v1.append(float(fields[3]))#Range
-    v1.append(float(fields[4]))#X-Wind Speed
-    v1.append(float(fields[5]))#Y-Wind Speed
-    v1.append(float(fields[6]))#Z-Wind Speed
-    v1.append(float(fields[7]))#CNR
-    v1.append(float(fields[8]))#Confidence
+    v2.append(float(fields[1]))#Azimuth
+    v3.append(float(fields[2]))#Elevation
+    v4.append(float(fields[3]))#Range
+    v5.append(float(fields[4]))#X-Wind Speed
+    v6.append(float(fields[5]))#Y-Wind Speed
+    v7.append(float(fields[6]))#Z-Wind Speed
+    v8.append(float(fields[7]))#CNR
+    v9.append(float(fields[8]))#Confidence
 #more variables included but this is just an abridged list
 print v1
 
@@ -36,6 +44,80 @@ print rootgrp.data_model
 #rootgrp.close()
 
 
+#ex
+'''
+lats_out = -25.0 + 5.0*arange(v4,dtype='float32')
+lons_out = -125.0 + 5.0*arange(v5,dtype='float32')
+'''
+
+#Ranges/ output data
+az = arange(v2, dtype='float32')
+el = arange(v3, dtype='float32')
+ranges = arange(v4, dtype='float32')
+x = arange(v5, dtype='float32')
+y = arange(v6, dtype='float32')
+z = arange(v7, dtype='float32')
+cnrs = arange(v8, dtype='float32')
+conf = arange(v9, dtype='float32')
+
+
+# create the dimensions.
+'''
+ncout.createDimension('latitude',v4)
+ncout.createDimension('longitude',v5)
+'''
+
+rootgrp.createDimension('Azimuth',v2)
+rootgrp.createDimension('Elevation',v3)
+rootgrp.createDimension('Range',v4)
+rootgrp.createDimension('xWind',v5)
+rootgrp.createDimension('yWind',v6)
+rootgrp.createDimension('zWind',v7)
+rootgrp.createDimension('CNR',v8)
+rootgrp.createDimension('ConfidenceIndex',v9)
+
+
+# Define the coordinate variables.
+'''
+lats = ncout.createVariable('latitude',dtype('float32').char,('latitude',))
+lons = ncout.createVariable('longitude',dtype('float32').char,('longitude',))
+'''
+
+Azimuth = rootgrp.createVariable('Azimuth',dtype('float32').char,('Azimuth',))
+Elevation = rootgrp.createVariable('Elevation',dtype('float32').char,('Elevation',))
+Range = rootgrp.createVariable('Range',dtype('float32').char,('Range',))
+xWind = rootgrp.createVariable('xWind',dtype('float32').char,('xWind',))
+yWind = rootgrp.createVariable('yWind',dtype('float32').char,('yWind',))
+zWind = rootgrp.createVariable('zWind',dtype('float32').char,('zWind',))
+CNR = rootgrp.createVariable('CNR',dtype('float32').char,('CNR',))
+ConfidenceIndex = rootgrp.createVariable('ConfidenceIndex',dtype('float32').char,('ConfidenceIndex',))
+
+# Assign units attributes to coordinate var data. This attaches a text attribute to each of the coordinate variables,
+#  containing the units.
+Azimuth.units = "degrees"
+Range.units = 'm'
+xWind.units = 'm/s'
+yWind.units = 'm/s'
+zWind.units = 'm/s'
+CNR.units = 'db'
+ConfidenceIndex.units = '%'
+
+# write data to coordinate vars.
+Azimuth[:] = az
+Elevation[:] = el
+Range[:] = ranges
+xWind[:] = x
+yWind[:] = y
+zWind[:] = z
+CNR[:] = cnrs
+ConfidenceIndex[:] = conf
+
+
+#close files
+rootgrp.close()
+f.close()
+
+'''
 #To create an unlimited dimension (a dimension that can be appended to), the size value is set to None or 0
 #name_str = rootgrp.createDimension('name_str', 50)
 
@@ -142,7 +224,7 @@ ConfidenceIndex[:] = conf
 
 print "Range =\n", Range[:]
 
-
+'''
 
 
 

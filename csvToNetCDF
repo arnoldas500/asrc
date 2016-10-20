@@ -131,7 +131,11 @@ def extract_and_format_data_from_source(sourcefile):
       air_temperatures.long_name = 'Air temperature in degrees Celcius'
       air_temperatures.units = 'degrees Celcius'
 
+      reconMeasure =
       # set the values of the variables
+
+
+
       station_name[:] = netCDF4.stringtoarr('Penlee', 50)
       altitude[:] = [station_altitude]
       latitudes[:] = [station_lat]

@@ -4,7 +4,7 @@ import os, sys
 import netCDF4
 from stat import S_ISREG, ST_CTIME, ST_MODE
 
-
+'''
 from netCDF4 import Dataset
 rootgrp = Dataset("test.nc", "w", format="NETCDF4")
 print rootgrp.data_model
@@ -21,7 +21,7 @@ OrderedDict([("forecasts",
               <netCDF4._netCDF4.Group object at 0x1b4b970>)])
 
 #To create an unlimited dimension (a dimension that can be appended to), the size value is set to None or 0.
-
+'''
 
 
 
@@ -66,6 +66,7 @@ def extract_and_format_data_from_source(sourcefile):
 
    timestamp = []
    temp = []
+   reconMeasure = []
 
    for row in obs_list:
       try:
@@ -166,7 +167,83 @@ EX:
       reconMeasure = rootgrp.createDimension('reconMeasure', None)
       time = rootgrp.createDimension('time', None)
 
-      # create the variables
+       # create the variables
+      times = rootgrp.createVariable("time","f8",("time",))
+      times.standard_name = 'time'
+      times.long_name = 'Time of measurement'
+      times.units = 'seconds since 1970-01-01 00:00:00'
+
+      elevation = rootgrp.createVariable("elevation", "f8", ("el",))
+      elevation.standard_name = 'elevation'
+      elevation.units = "degrees"
+
+      azimuth = rootgrp.createVariable("Azimuth", "f8" , ("az",))
+      az.units = "degrees"
+
+      x = rootgrp.createVariable("x", "f4", ("x",))
+      x.standard_name = 'X-Wind Speed'
+      x.units = 'm/s'
+
+      range = rootgrp.createVariable("range", "f4", ("range",))
+      range.units = 'm'
+
+
+        #station_name[:] = netCDF4.stringtoarr('Penlee', 50)
+      #altitude[:] = [station_altitude]
+      #latitudes[:] = [station_lat]
+      #longitudes[:] = [station_lon]
+      times[:] = timestamp
+      #air_temperatures[:] = temp
+
+      rootgrp.close()
+
+entries = (os.path.join(sourcefolder, fn) for fn in os.listdir(sourcefolder))
+entries = ((os.stat(path), path) for path in entries)
+
+# leave only regular files, insert creation date
+entries = ((stat[ST_CTIME], path)
+           for stat, path in entries if S_ISREG(stat[ST_MODE]))
+
+for cdate, path in sorted(entries):
+  #print('processing '+ path )
+  extract_and_format_data_from_source(path)
+
+
+
+
+'''
+The createVariable method has two mandatory arguments, the variable name (a Python string),and the variable datatype.
+ The variable's dimensions are given by a tuple containing the dimension names (defined previously with createDimension).
+  To create a scalar variable, simply leave out the dimensions keyword.
+   The variable primitive datatypes correspond to the dtype attribute of a numpy array.
+    You can specify the datatype as a numpy dtype object, or anything that can be converted to a numpy dtype object.
+     Valid datatype specifiers include: 'f4' (32-bit floating point), 'f8' (64-bit floating point),
+      'i4' (32-bit signed integer), 'i2' (16-bit signed integer), 'i8' (64-bit singed integer),
+       'i1' (8-bit signed integer), 'u1' (8-bit unsigned integer), 'u2' (16-bit unsigned integer),
+        'u4' (32-bit unsigned integer), 'u8' (64-bit unsigned integer), or 'S1' (single-character string).
+
+
+
+
+The dimensions themselves are usually also defined as variables, called coordinate variables.
+ The createVariable method returns an instance of the Variable class whose methods can be used later
+  to access and set variable data and attributes.
+
+EX:
+>>> times = rootgrp.createVariable("time","f8",("time",))
+>>> levels = rootgrp.createVariable("level","i4",("level",))
+>>> latitudes = rootgrp.createVariable("latitude","f4",("lat",))
+>>> longitudes = rootgrp.createVariable("longitude","f4",("lon",))
+>>> # two dimensions unlimited
+>>> temp = rootgrp.createVariable("temp","f4",("time","level","lat","lon",))
+
+'''
+
+
+
+
+
+'''
       station_name = rootgrp.createVariable('station_name', 'c', ('name_str',))
       station_name.cf_role = 'timeseries_id'
       station_name.long_name = 'station name'
@@ -199,28 +276,10 @@ EX:
 
       reconMeasure =
       # set the values of the variables
+'''
 
 
 
-      station_name[:] = netCDF4.stringtoarr('Penlee', 50)
-      altitude[:] = [station_altitude]
-      latitudes[:] = [station_lat]
-      longitudes[:] = [station_lon]
-      times[:] = timestamp
-      air_temperatures[:] = temp
-
-      rootgrp.close()
-
-entries = (os.path.join(sourcefolder, fn) for fn in os.listdir(sourcefolder))
-entries = ((os.stat(path), path) for path in entries)
-
-# leave only regular files, insert creation date
-entries = ((stat[ST_CTIME], path)
-           for stat, path in entries if S_ISREG(stat[ST_MODE]))
-
-for cdate, path in sorted(entries):
-  #print('processing '+ path )
-  extract_and_format_data_from_source(path)
 
 
 '''

@@ -30,7 +30,7 @@ for line in f[1:]:
     v8.append(float(fields[7]))#CNR
     v9.append(float(fields[8]))#Confidence
 #more variables included but this is just an abridged list
-print v1
+#print v1
 
 
 from netCDF4 import Dataset
@@ -50,6 +50,16 @@ lats_out = -25.0 + 5.0*arange(v4,dtype='float32')
 lons_out = -125.0 + 5.0*arange(v5,dtype='float32')
 '''
 
+az = numpy.arange(-180,180,2.5)
+el = numpy.arange(-180,180,2.5)
+ranges = numpy.arange(100,10000,25)
+x = numpy.arange(-100,100,2.5)
+y = numpy.arange(-100,100,2.5)
+z = numpy.arange(-100,100,2.5)
+cnrs = numpy.arange(-100,100,2.5)
+conf = numpy.arange(0,100,100)
+
+'''
 #Ranges/ output data
 az = arange(v2, dtype='float32')
 el = arange(v3, dtype='float32')
@@ -59,7 +69,7 @@ y = arange(v6, dtype='float32')
 z = arange(v7, dtype='float32')
 cnrs = arange(v8, dtype='float32')
 conf = arange(v9, dtype='float32')
-
+'''
 
 # create the dimensions.
 '''
@@ -67,14 +77,14 @@ ncout.createDimension('latitude',v4)
 ncout.createDimension('longitude',v5)
 '''
 
-rootgrp.createDimension('Azimuth',v2)
-rootgrp.createDimension('Elevation',v3)
-rootgrp.createDimension('Range',v4)
-rootgrp.createDimension('xWind',v5)
-rootgrp.createDimension('yWind',v6)
-rootgrp.createDimension('zWind',v7)
-rootgrp.createDimension('CNR',v8)
-rootgrp.createDimension('ConfidenceIndex',v9)
+rootgrp.createDimension('Azimuth',None)
+rootgrp.createDimension('Elevation',None)
+rootgrp.createDimension('Range',None)
+rootgrp.createDimension('xWind',None)
+rootgrp.createDimension('yWind',None)
+rootgrp.createDimension('zWind',None)
+rootgrp.createDimension('CNR',None)
+rootgrp.createDimension('ConfidenceIndex',None)
 
 
 # Define the coordinate variables.
@@ -115,7 +125,7 @@ ConfidenceIndex[:] = conf
 
 #close files
 rootgrp.close()
-f.close()
+#f.close()
 
 '''
 #To create an unlimited dimension (a dimension that can be appended to), the size value is set to None or 0
@@ -180,14 +190,14 @@ rootgrp.history = "Created " + time.ctime(time.time())
 rootgrp.source = "netCDF4 python module"
 
 #units specified above
-'''
+
 latitudes.units = "degrees north"
 longitudes.units = "degrees east"
 levels.units = "hPa"
 temp.units = "K"
 times.units = "hours since 0001-01-01 00:00:00.0"
 times.calendar = "gregorian"
-'''
+
 
 for name in rootgrp.ncattrs():
     print "Global attr", name, "=", getattr(rootgrp,name)
@@ -196,13 +206,13 @@ for name in rootgrp.ncattrs():
 print rootgrp.__dict__
 
 import numpy
-'''
+
 lats =  numpy.arange(-90,91,2.5)
 lons =  numpy.arange(-180,180,2.5)
 latitudes[:] = lats
 longitudes[:] = lons
 print "latitudes =\n",latitudes[:]
-'''
+
 
 az = numpy.arange(-180,180,2.5)
 el = numpy.arange(-180,180,2.5)

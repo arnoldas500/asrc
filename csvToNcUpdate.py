@@ -86,6 +86,12 @@ rootgrp.createDimension('zWind',None)
 rootgrp.createDimension('CNR',None)
 rootgrp.createDimension('ConfidenceIndex',None)
 
+#printing the dimensions from python dictionary
+print rootgrp.dimensions
+
+#printing the name and length of the dimensions and showing what is unlimited
+for dimobj in rootgrp.dimensions.values():
+  print dimobj
 
 # Define the coordinate variables.
 '''
@@ -112,6 +118,24 @@ zWind.units = 'm/s'
 CNR.units = 'db'
 ConfidenceIndex.units = '%'
 
+# printing python dictionary with all the current variables
+print rootgrp.variables
+
+# set the global attributes
+import time
+rootgrp.description = "lidar data csv to netCDF script"
+rootgrp.history = "Created " + time.ctime(time.time())
+rootgrp.source = "netCDF4 python module"
+# creator details
+rootgrp.creator_name = 'Arnoldas Kurbanovas'
+rootgrp.creator_email = 'akurbanovas@albany.edu'
+
+for name in rootgrp.ncattrs():
+    print "Global attr", name, "=", getattr(rootgrp,name)
+
+#providing all the netCDF attribute name/value pairs in a python dictionary
+print rootgrp.__dict__
+
 # write data to coordinate vars.
 Azimuth[:] = az
 Elevation[:] = el
@@ -121,6 +145,25 @@ yWind[:] = y
 zWind[:] = z
 CNR[:] = cnrs
 ConfidenceIndex[:] = conf
+
+
+print "\n\n\n\n\n\n\n\n\nREPRINGING CHECK \n\n\n\n\n\n\n\n\n"
+
+
+#reprinting check:
+print rootgrp.data_model
+#printing the dimensions from python dictionary
+print rootgrp.dimensions
+
+#printing the name and length of the dimensions and showing what is unlimited
+for dimobj in rootgrp.dimensions.values():
+  print dimobj
+print rootgrp.variables
+for name in rootgrp.ncattrs():
+    print "Global attr", name, "=", getattr(rootgrp,name)
+
+#providing all the netCDF attribute name/value pairs in a python dictionary
+print rootgrp.__dict__
 
 
 #close files

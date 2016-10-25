@@ -6,15 +6,15 @@ import csv
 from numpy import arange, dtype
 
 #Declare empty array for storing csv data
-v1 = []
-v2 = []
-v3 = []
-v4 = []
-v5 = []
-v6 = []
-v7 = []
-v8 = []
-v9 = []
+v1 = [] #TimeStamp
+v2 = [] #Azimuth
+v3 = [] #Elevation
+v4 = [] #Range
+v5 = [] #X-Wind Speed
+v6 = [] #Y-Wind Speed
+v7 = [] #Z-Wind Speed
+v8 = [] #CNR
+v9 = [] #Confidence
 
 f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 
@@ -69,6 +69,8 @@ Range[:] = ranges
 Range = v4
 
 
+
+
 '''
 #Ranges/ output data
 az = arange(v2, dtype='float32')
@@ -87,6 +89,7 @@ ncout.createDimension('latitude',v4)
 ncout.createDimension('longitude',v5)
 '''
 
+rootgrp.createDimension('TimeStamp', None)
 rootgrp.createDimension('Azimuth',None)
 rootgrp.createDimension('Elevation',None)
 
@@ -109,6 +112,7 @@ lats = ncout.createVariable('latitude',dtype('float32').char,('latitude',))
 lons = ncout.createVariable('longitude',dtype('float32').char,('longitude',))
 '''
 
+TimeStamp = rootgrp.createVariable('TimeStamp', dtype('float32').char, ('TimeStamp',))
 Azimuth = rootgrp.createVariable('Azimuth',dtype('float32').char,('Azimuth',))
 Elevation = rootgrp.createVariable('Elevation',dtype('float32').char,('Elevation',))
 
@@ -117,6 +121,9 @@ yWind = rootgrp.createVariable('yWind',dtype('float32').char,('yWind',))
 zWind = rootgrp.createVariable('zWind',dtype('float32').char,('zWind',))
 CNR = rootgrp.createVariable('CNR',dtype('float32').char,('CNR',))
 ConfidenceIndex = rootgrp.createVariable('ConfidenceIndex',dtype('float32').char,('ConfidenceIndex',))
+
+wind = rootgrp.createVariable('wind',dtype('float32').char,('TimeStamp', 'Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
+wind.units = "m/s"
 
 # Assign units attributes to coordinate var data. This attaches a text attribute to each of the coordinate variables,
 #  containing the units.

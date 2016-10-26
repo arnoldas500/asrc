@@ -11,15 +11,20 @@ station_altitude = 8
 
 sourcefolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/'
 targetfolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/'
-targetfile = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv'
 outputfilenameprefix = 'test1'
 
 epoch = datetime.datetime.utcfromtimestamp(0)
-
+'''
+f=codecs.open(location,"rb","utf-16")
+csvread=csv.reader(f,delimiter='\t')
+csvread.next()
+'''
 def csv_to_list(csv_file, delimiter=','):
-   with open(csv_file, 'r') as csv_con:
-      reader = csv.reader(csv_con, delimiter=delimiter)
-      return list(reader)
+   #with open(csv_file, 'rb') as csv_con:
+      #reader = csv.reader(csv_con, delimiter=delimiter)
+  f = open(csv_file, 'r').readlines()
+      #return list(reader)
+  return list(f)
 
 def append_to_avg_list(avg_list, source_list):
    if len(source_list) > 0:
@@ -28,11 +33,6 @@ def append_to_avg_list(avg_list, source_list):
 def extract_and_format_data_from_source(sourcefile):
    obs_list = csv_to_list(sourcefile)
 
-
-timestamp = []
-temp = []
-
-'''
    try:
       targetfilename = outputfilenameprefix+'.nc'
       targetfile = targetfolder + targetfilename
@@ -65,8 +65,10 @@ temp = []
          print('error in row: ' + str(row) +' in '+ sourcefile)
 
    # we have the data; next check for an existing file for this datetime
+   ''''''
    if os.path.isfile(targetfile):
       # append the data to the file
+      '''
       rootgrp = netCDF4.Dataset(targetfile, 'a', format='NETCDF4')
 
       times = rootgrp.variables['TimeStamp']
@@ -80,108 +82,103 @@ temp = []
       air_temperatures[start:end] = temp
 
       rootgrp.close()
+      '''
    else:
-   '''
+      # create a new file and add the data to it
+      rootgrp = netCDF4.Dataset(targetfile, 'w', format='NETCDF4')
 
-from netCDF4 import Dataset
-# create a new file and add the data to it
-#rootgrp = netCDF4.Dataset(targetfile, 'w', format='NETCDF4')
-rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconData.nc', "w", format="NETCDF4")
+      # set the global attributes
+      rootgrp.id = 'PML-Penlee-Met'
+      rootgrp.naming_authority = 'Plymouth Marine Laboratory'
+      rootgrp.Metadata_Conventions = 'Unidata Dataset Discovery v1.0'
+      rootgrp.Conventions = 'CF-1.6'
+      rootgrp.featureType = 'timeSeries'
+      # publisher details
+      rootgrp.publisher_name = 'Plymouth Marine Laboratory'
+      rootgrp.publisher_phone = '+44 (0)1752 633100'
+      rootgrp.publisher_url = 'http://www.westernchannelobservatory.org.uk/penlee'
+      rootgrp.publisher_email = 'forinfo@pml.ac.uk'
+      rootgrp.title = 'Penlee observatory meteorological data'
+      rootgrp.summary = 'Air temperature measurements taken at Penlee Point observatory; measurements are taken every 4 seconds.'
+      # creator details
+      rootgrp.creator_name = 'Ben Calton'
+      rootgrp.creator_email = 'bac@pml.ac.uk'
+      rootgrp.creator_url = 'https://rsg.pml.ac.uk/'
 
-
-# set the global attributes
-rootgrp.id = 'PML-Penlee-Met'
-rootgrp.naming_authority = 'Plymouth Marine Laboratory'
-rootgrp.Metadata_Conventions = 'Unidata Dataset Discovery v1.0'
-rootgrp.Conventions = 'CF-1.6'
-rootgrp.featureType = 'timeSeries'
-# publisher details
-rootgrp.publisher_name = 'Plymouth Marine Laboratory'
-rootgrp.publisher_phone = '+44 (0)1752 633100'
-rootgrp.publisher_url = 'http://www.westernchannelobservatory.org.uk/penlee'
-rootgrp.publisher_email = 'forinfo@pml.ac.uk'
-rootgrp.title = 'Penlee observatory meteorological data'
-rootgrp.summary = 'Air temperature measurements taken at Penlee Point observatory; measurements are taken every 4 seconds.'
-# creator details
-rootgrp.creator_name = 'Ben Calton'
-rootgrp.creator_email = 'bac@pml.ac.uk'
-rootgrp.creator_url = 'https://rsg.pml.ac.uk/'
-
-# create the dimensions
-name_str = rootgrp.createDimension('name_str', None)
+      # create the dimensions
+      name_str = rootgrp.createDimension('name_str', None)
 #      time = rootgrp.createDimension('time', None)
 
-reconMeasure = rootgrp.createDimension('reconMeasure', None)
-time = rootgrp.createDimension('time', None)
+      reconMeasure = rootgrp.createDimension('reconMeasure', None)
+      time = rootgrp.createDimension('time', None)
 
-# create the variables
-station_name = rootgrp.createVariable('station_name', 'c', ('name_str',))
-station_name.cf_role = 'timeseries_id'
-station_name.long_name = 'station name'
+      # create the variables
+      station_name = rootgrp.createVariable('station_name', 'c', ('name_str',))
+      station_name.cf_role = 'timeseries_id'
+      station_name.long_name = 'station name'
 
-altitude = rootgrp.createVariable('altitude', 'f4', ())
-altitude.standard_name = 'altitude'
-altitude.long_name = 'Observatory altitude'
-altitude.units = 'm'
+      altitude = rootgrp.createVariable('altitude', 'f4', ())
+      altitude.standard_name = 'altitude'
+      altitude.long_name = 'Observatory altitude'
+      altitude.units = 'm'
 
-latitudes = rootgrp.createVariable('lat', 'f4', ())
-latitudes.standard_name = 'latitude'
-latitudes.long_name = 'Observatory latitude'
-latitudes.units = 'degrees_north'
+      latitudes = rootgrp.createVariable('lat', 'f4', ())
+      latitudes.standard_name = 'latitude'
+      latitudes.long_name = 'Observatory latitude'
+      latitudes.units = 'degrees_north'
 
-longitudes = rootgrp.createVariable('lon', 'f4', ())
-longitudes.standard_name = 'longitude'
-longitudes.long_name = 'Observatory longitude'
-longitudes.units = 'degrees_east'
+      longitudes = rootgrp.createVariable('lon', 'f4', ())
+      longitudes.standard_name = 'longitude'
+      longitudes.long_name = 'Observatory longitude'
+      longitudes.units = 'degrees_east'
 
-times = rootgrp.createVariable('time', 'i4', ('time',))
-times.standard_name = 'time'
-times.long_name = 'Time of measurement'
-times.units = 'seconds since 1970-01-01 00:00:00'
-
-####
-elevation = rootgrp.createVariable("elevation", "f8", ("reconMeasure",))
-elevation.standard_name = 'elevation'
-elevation.units = "degrees"
-
-azimuth = rootgrp.createVariable("Azimuth", "f8" , ("reconMeasure",))
-azimuth.units = "degrees"
-
-x = rootgrp.createVariable("x", "f4", ("reconMeasure",))
-x.standard_name = 'X-Wind Speed'
-x.units = 'm/s'
-
-range = rootgrp.createVariable("range", "f4", ("reconMeasure",))
-range.units = 'm'
-
-winds = rootgrp.createVariable('winds', 'f4', ('time'))
-winds.coordinates = 'lat lon'
-winds.standard_name = 'winds'
-winds.units = 'm/s'
-
+      times = rootgrp.createVariable('time', 'i4', ('time',))
+      times.standard_name = 'time'
+      times.long_name = 'Time of measurement'
+      times.units = 'seconds since 1970-01-01 00:00:00'
 
 ####
-'''
-air_temperatures = rootgrp.createVariable('air_temperature', 'f4', ('time',))
-air_temperatures.coordinates = 'lat lon'
-air_temperatures.standard_name = 'air_temperature'
-air_temperatures.long_name = 'Air temperature in degrees Celcius'
-air_temperatures.units = 'degrees Celcius'
-'''
+      elevation = rootgrp.createVariable("elevation", "f8", ("reconMeasure",))
+      elevation.standard_name = 'elevation'
+      elevation.units = "degrees"
+
+      azimuth = rootgrp.createVariable("Azimuth", "f8" , ("reconMeasure",))
+      azimuth.units = "degrees"
+
+      x = rootgrp.createVariable("x", "f4", ("reconMeasure",))
+      x.standard_name = 'X-Wind Speed'
+      x.units = 'm/s'
+
+      range = rootgrp.createVariable("range", "f4", ("reconMeasure",))
+      range.units = 'm'
+
+      winds = rootgrp.createVariable('winds', 'f4', ('time'))
+      winds.coordinates = 'lat lon'
+      winds.standard_name = 'winds'
+      winds.units = 'm/s'
+
+
+####
+      '''
+      air_temperatures = rootgrp.createVariable('air_temperature', 'f4', ('time',))
+      air_temperatures.coordinates = 'lat lon'
+      air_temperatures.standard_name = 'air_temperature'
+      air_temperatures.long_name = 'Air temperature in degrees Celcius'
+      air_temperatures.units = 'degrees Celcius'
+      '''
 
 
 
-# set the values of the variables
-station_name[:] = netCDF4.stringtoarr('Penlee', 50)
-altitude[:] = [station_altitude]
-latitudes[:] = [station_lat]
-longitudes[:] = [station_lon]
-times[:] = timestamp
-winds[:] = temp
+      # set the values of the variables
+      station_name[:] = netCDF4.stringtoarr('Penlee', 50)
+      altitude[:] = [station_altitude]
+      latitudes[:] = [station_lat]
+      longitudes[:] = [station_lon]
+      times[:] = timestamp
+      winds[:] = temp
 
-rootgrp.close()
+      rootgrp.close()
 
-'''
 entries = (os.path.join(sourcefolder, fn) for fn in os.listdir(sourcefolder))
 entries = ((os.stat(path), path) for path in entries)
 
@@ -192,4 +189,3 @@ entries = ((stat[ST_CTIME], path)
 for cdate, path in sorted(entries):
   #print('processing '+ path )
   extract_and_format_data_from_source(path)
-'''

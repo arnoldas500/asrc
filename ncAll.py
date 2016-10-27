@@ -1,4 +1,4 @@
-#everything seperate variables
+#everything seperate variables working
 
 import numpy
 import netCDF4
@@ -7,22 +7,30 @@ import csv
 from numpy import arange, dtype
 
 #Declare empty array for storing csv data
-v1 = []
+v1 = [] #TimeStamp
+v2 = [] #Azimuth
+v3 = [] #Elevation
+v4 = [] #Range
+v5 = [] #X-Wind Speed
+v6 = [] #Y-Wind Speed
+v7 = [] #Z-Wind Speed
+v8 = [] #CNR
+v9 = [] #Confidence
 
-#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
-f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
 
 for line in f[1:]:
     fields = line.split(',')
-    #v1.append(fields[0]) #TimeStamp
-    v1.append(float(fields[1]))#Azimuth
-    v1.append(float(fields[2]))#Elevation
-    v1.append(float(fields[3]))#Range
-    v1.append(float(fields[4]))#X-Wind Speed
-    v1.append(float(fields[5]))#Y-Wind Speed
-    v1.append(float(fields[6]))#Z-Wind Speed
-    v1.append(float(fields[7]))#CNR
-    v1.append(float(fields[8]))#Confidence
+    v1.append(fields[0]) #TimeStamp
+    v2.append(float(fields[1]))#Azimuth
+    v3.append(float(fields[2]))#Elevation
+    v4.append(float(fields[3]))#Range
+    v5.append(float(fields[4]))#X-Wind Speed
+    v6.append(float(fields[5]))#Y-Wind Speed
+    v7.append(float(fields[6]))#Z-Wind Speed
+    v8.append(float(fields[7]))#CNR
+    v9.append(float(fields[8]))#Confidence
 #more variables included but this is just an abridged list
 #print v1
 
@@ -31,8 +39,8 @@ from netCDF4 import Dataset
 #rootgrp = Dataset("test.nc", "w", format="NETCDF4")
 #rootgrp = netCDF4.Dataset('station_data.nc','w')
 #convert to netcdf4 framework that works as a netcdf
-#rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconData.nc', "w", format="NETCDF4")
-rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/wholeData.nc', "w", format="NETCDF4")
+rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconData.nc', "w", format="NETCDF4")
+#rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/wholeData.nc', "w", format="NETCDF4")
 print rootgrp.data_model
 #NETCDF4
 #to close netCDF file
@@ -138,16 +146,21 @@ z = numpy.arange(-100,100,2.5)
 cnrs = numpy.arange(-100,100,2.5)
 conf = numpy.arange(0,100,100)
 
-Azimuth[:] = az
-Elevation[:] = el
-Range[:] = ranges
-xWind[:] = x
-yWind[:] = y
-zWind[:] = z
-CNR[:] = cnrs
-ConfidenceIndex[:] = conf
+Azimuth[:] = v2
+Elevation[:] = v3
+Range[:] = v4
+xWind[:] = v5
+yWind[:] = v6
+zWind[:] = v7
+CNR[:] = v8
+ConfidenceIndex[:] = v9
 
-wind[:] = v1
+from numpy.random import uniform
+#temp[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
+#wind[:] = (v2,v3)
+#wind[:,:] = (Azimuth,Elevation)
+
+print "****************\n\n\n\n\n\n\n********************"
 
 print wind
 

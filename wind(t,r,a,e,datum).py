@@ -1,3 +1,4 @@
+#everything seperate variables working
 
 import numpy
 import netCDF4
@@ -17,6 +18,7 @@ v8 = [] #CNR
 v9 = [] #Confidence
 
 f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
 
 for line in f[1:]:
     fields = line.split(',')
@@ -31,7 +33,6 @@ for line in f[1:]:
     v9.append(float(fields[8]))#Confidence
 #more variables included but this is just an abridged list
 #print v1
-
 
 
 from netCDF4 import Dataset
@@ -91,14 +92,15 @@ conf = arange(v9, dtype='float32')
 ncout.createDimension('latitude',v4)
 ncout.createDimension('longitude',v5)
 '''
+
 #reconMeasure = rootgrp.createDimension('reconMeasure', None)
 TimeStamp = rootgrp.createDimension('TimeStamp', None)
-Azimuth = rootgrp.createDimension('Azimuth',100000000)
-Elevation = rootgrp.createDimension('Elevation',100000000)
-Range = rootgrp.createDimension('Range',100000000)
-xWind = rootgrp.createDimension('xWind',100000000)
-yWind = rootgrp.createDimension('yWind',100000000)
-zWind = rootgrp.createDimension('zWind',100000000)
+Azimuth = rootgrp.createDimension('Azimuth',None)
+Elevation = rootgrp.createDimension('Elevation',None)
+Range = rootgrp.createDimension('Range',None)
+xWind = rootgrp.createDimension('xWind',None)
+yWind = rootgrp.createDimension('yWind',None)
+zWind = rootgrp.createDimension('zWind',None)
 CNR = rootgrp.createDimension('CNR',None)
 ConfidenceIndex = rootgrp.createDimension('ConfidenceIndex',None)
 
@@ -115,7 +117,125 @@ lats = ncout.createVariable('latitude',dtype('float32').char,('latitude',))
 lons = ncout.createVariable('longitude',dtype('float32').char,('longitude',))
 '''
 
+# create the variables
 TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))
+TimeStamp.standard_name = 'TimeStamp'
+TimeStamp.long_name = 'Time of measurement'
+TimeStamp.units = 'seconds since 1970-01-01 00:00:00'
+
+Azimuth = rootgrp.createVariable("Azimuth", "i8" , ("Azimuth",))
+Azimuth.standard_name = 'Azimuth'
+Azimuth.units = "degrees"
+
+Elevation = rootgrp.createVariable("Elevation", "f8", ("Elevation",))
+Elevation.standard_name = 'Elevation'
+Elevation.units = "degrees"
+
+Range = rootgrp.createVariable("Range", "f4", ("Range",))
+Range.standard_name = 'Range'
+Range.units = 'm'
+
+xWind = rootgrp.createVariable("xWind", "i8", ("xWind",))
+xWind.standard_name = 'X-Wind Speed'
+xWind.units = 'm/s'
+
+yWind = rootgrp.createVariable("yWind", "i8", ("yWind",))
+yWind.standard_name = 'Y-Wind Speed'
+yWind.units = 'm/s'
+
+zWind = rootgrp.createVariable("zWind", "i8", ("zWind",))
+zWind.standard_name = 'Z-Wind Speed'
+zWind.units = 'm/s'
+
+CNR = rootgrp.createVariable("CNR", "i8", ("CNR",))
+CNR.standard_name = 'CNR'
+CNR.units = 'db'
+
+ConfidenceIndex = rootgrp.createVariable("ConfidenceIndex", "u1", ("ConfidenceIndex",))
+ConfidenceIndex.standard_name = 'Confidence index'
+ConfidenceIndex.units = '%'
+
+wind = rootgrp.createVariable('wind',"f4",('TimeStamp', 'Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
+wind.units = "m/s"
+
+# printing python dictionary with all the current variables
+print rootgrp.variables
+
+# set the global attributes
+import time
+rootgrp.description = "lidar data csv to netCDF script"
+rootgrp.history = "Created " + time.ctime(time.time())
+rootgrp.source = "netCDF4 python module"
+
+#units specified above
+'''
+latitudes.units = "degrees north"
+longitudes.units = "degrees east"
+levels.units = "hPa"
+temp.units = "K"
+times.units = "hours since 0001-01-01 00:00:00.0"
+times.calendar = "gregorian"
+'''
+
+for name in rootgrp.ncattrs():
+    print "Global attr", name, "=", getattr(rootgrp,name)
+
+#providing all the netCDF attribute name/value pairs in a python dictionary
+print rootgrp.__dict__
+
+import numpy
+'''
+lats =  numpy.arange(-90,91,2.5)
+lons =  numpy.arange(-180,180,2.5)
+latitudes[:] = lats
+longitudes[:] = lons
+print "latitudes =\n",latitudes[:]
+'''
+
+az = numpy.arange(-180,180,2.5)
+el = numpy.arange(-180,180,2.5)
+ranges = numpy.arange(100,10000,25)
+x = numpy.arange(-100,100,2.5)
+y = numpy.arange(-100,100,2.5)
+z = numpy.arange(-100,100,2.5)
+cnrs = numpy.arange(-100,100,2.5)
+conf = numpy.arange(0,100,100)
+
+Azimuth[:] = v2
+Elevation[:] = v3
+Range[:] = v4
+xWind[:] = v5
+yWind[:] = v6
+zWind[:] = v7
+CNR[:] = v8
+ConfidenceIndex[:] = v9
+
+from numpy.random import uniform
+#temp[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
+#wind[:] = (v2,v3)
+#wind[:,:] = (Azimuth,Elevation)
+
+print "****************\n\n\n\n\n\n\n********************"
+
+print wind
+
+#print "Range =\n", Range[:]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))
 #Azimuth = rootgrp.createVariable('Azimuth',dtype('float32').char,('Azimuth',))
 #Elevation = rootgrp.createVariable('Elevation',dtype('float32').char,('Elevation',))
 #Range = rootgrp.createVariable('Range',dtype('float32').char,('Range',))
@@ -125,10 +245,7 @@ TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))
 #CNR = rootgrp.createVariable('CNR',dtype('float32').char,('CNR',))
 #ConfidenceIndex = rootgrp.createVariable('ConfidenceIndex',dtype('float32').char,('ConfidenceIndex',))
 
-wind = rootgrp.createVariable('wind',"f4",('TimeStamp', 'Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
-wind.units = "m/s"
 
-print wind
 
 '''
 >>> levels = rootgrp.createVariable("level","i4",("level",))
@@ -139,58 +256,6 @@ print wind
 '''
 
 
-
-
-
-# Assign units attributes to coordinate var data. This attaches a text attribute to each of the coordinate variables,
-#  containing the units.
-TimeStamp.units = "hours since 0001-01-01 00:00:00.0"
-TimeStamp.calendar = "gregorian"
-#Azimuth.units = "degrees"
-#Elevation.units = "degrees"
-
-wind.units = 'm/s'
-#xWind.units = 'm/s'
-#yWind.units = 'm/s'
-#zWind.units = 'm/s'
-#CNR.units = 'db'
-#ConfidenceIndex.units = '%'
-
-# printing python dictionary with all the current variables
-print rootgrp.variables
-
-# set the global attributes
-import time
-rootgrp.description = "lidar data csv to netCDF script"
-rootgrp.history = "Created " + time.ctime(time.time())
-rootgrp.source = "netCDF4 python module"
-# creator details
-rootgrp.creator_name = 'Arnoldas Kurbanovas'
-rootgrp.creator_email = 'akurbanovas@albany.edu'
-
-for name in rootgrp.ncattrs():
-    print "Global attr", name, "=", getattr(rootgrp,name)
-
-#providing all the netCDF attribute name/value pairs in a python dictionary
-print rootgrp.__dict__
-
-# write data to coordinate vars.
-#Azimuth[:] = az
-#Elevation[:] = el
-
-#xWind[:] = x
-#yWind[:] = y
-#zWind[:] = z
-#CNR[:] = cnrs
-#ConfidenceIndex[:] = conf
-
-from numpy.random import uniform
-#temp[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
-#wind[:] = uniform(size=(v2,v3,v4,v5,v6,v7))
-#wind[:, :, :, :, :, :] = [v2, v3, v4, v5, v6, v7]
-wind = [v2, v3, v4, v5, v6, v7]
-
-#wind[:] = az+el+x+y+z
 
 print "\n\n\n\n\n\n\n\n\nREPRINGING CHECK \n\n\n\n\n\n\n\n\n"
 

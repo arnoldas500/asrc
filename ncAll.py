@@ -166,7 +166,9 @@ print wind
 
 #print "Range =\n", Range[:]
 
-
+#close files
+rootgrp.close()
+#f.close()
 
 
 

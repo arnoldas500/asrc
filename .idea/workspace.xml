@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c38e897f-634c-472d-b780-e5e1266c4dcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/xarray.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/csvToNetCDF" afterPath="$PROJECT_DIR$/csvToNetCDF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netcdfNew.py" afterPath="$PROJECT_DIR$/netcdfNew.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ncAll.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/csvToNcUpdate.py" afterPath="$PROJECT_DIR$/csvToNcUpdate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nc.py" afterPath="$PROJECT_DIR$/nc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wind(t,r,a,e,datum).py" afterPath="$PROJECT_DIR$/wind(t,r,a,e,datum).py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/xarray.py" afterPath="$PROJECT_DIR$/xarray.py" />
     </list>
     <ignored path="asrc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
       <file leaf-file-name="csvToNetCDF" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/csvToNetCDF">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
+            <state relative-caret-position="2925">
               <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -52,7 +53,7 @@
       <file leaf-file-name="netcdfNew.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netcdfNew.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
+            <state relative-caret-position="1155">
               <caret line="84" column="9" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -64,22 +65,22 @@
       <file leaf-file-name="nc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
               <folding>
-                <element signature="e#1#13#0" expanded="true" />
+                <element signature="e#38#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xarray.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/xarray.py">
+      <file leaf-file-name="ncAll.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ncAll.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#32#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,8 +89,8 @@
       <file leaf-file-name="wind(t,r,a,e,datum).py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wind(t,r,a,e,datum).py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="24" />
+            <state relative-caret-position="270">
+              <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
               <folding>
                 <element signature="e#1#13#0" expanded="true" />
               </folding>
@@ -100,7 +101,7 @@
       <file leaf-file-name="1D.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/1D.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
+            <state relative-caret-position="418">
               <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
               <folding>
                 <element signature="e#72#99#0" expanded="true" />
@@ -112,8 +113,8 @@
       <file leaf-file-name="csvToNcUpdate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/csvToNcUpdate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="388">
+              <caret line="130" column="18" selection-start-line="129" selection-start-column="0" selection-end-line="130" selection-end-column="18" />
               <folding>
                 <element signature="e#1#13#0" expanded="true" />
               </folding>
@@ -136,14 +137,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nc.py" />
-        <option value="$PROJECT_DIR$/csvToNcUpdate.py" />
-        <option value="$PROJECT_DIR$/wind(t,r,a,e,datum).py" />
         <option value="$PROJECT_DIR$/1D.py" />
         <option value="$PROJECT_DIR$/netcdf.py" />
         <option value="$PROJECT_DIR$/csvToNetCDF" />
         <option value="$PROJECT_DIR$/netcdfNew.py" />
         <option value="$PROJECT_DIR$/xarray.py" />
+        <option value="$PROJECT_DIR$/wind(t,r,a,e,datum).py" />
+        <option value="$PROJECT_DIR$/csvToNcUpdate.py" />
+        <option value="$PROJECT_DIR$/nc.py" />
+        <option value="$PROJECT_DIR$/ncAll.py" />
       </list>
     </option>
   </component>
@@ -213,24 +215,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FullScreen" value="true" />
   </component>
-  <component name="RunManager" selected="Python.netcdfNew">
-    <configuration default="false" name="nc" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="asrc" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nc.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.nc">
     <configuration default="false" name="csvToNcUpdate" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -265,23 +250,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="1D" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="asrc" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1D.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="netcdfNew" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -295,6 +263,40 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="asrc" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/netcdfNew.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="xarray" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="asrc" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/xarray.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="nc" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="asrc" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nc.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -447,19 +449,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.nc" />
-      <item index="1" class="java.lang.String" itemvalue="Python.csvToNcUpdate" />
-      <item index="2" class="java.lang.String" itemvalue="Python.wind(t,r,a,e,datum)" />
-      <item index="3" class="java.lang.String" itemvalue="Python.1D" />
-      <item index="4" class="java.lang.String" itemvalue="Python.netcdfNew" />
+      <item index="0" class="java.lang.String" itemvalue="Python.csvToNcUpdate" />
+      <item index="1" class="java.lang.String" itemvalue="Python.wind(t,r,a,e,datum)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.netcdfNew" />
+      <item index="3" class="java.lang.String" itemvalue="Python.xarray" />
+      <item index="4" class="java.lang.String" itemvalue="Python.nc" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.netcdfNew" />
-        <item index="1" class="java.lang.String" itemvalue="Python.1D" />
+        <item index="0" class="java.lang.String" itemvalue="Python.nc" />
+        <item index="1" class="java.lang.String" itemvalue="Python.csvToNcUpdate" />
         <item index="2" class="java.lang.String" itemvalue="Python.wind(t,r,a,e,datum)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.csvToNcUpdate" />
-        <item index="4" class="java.lang.String" itemvalue="Python.nc" />
+        <item index="3" class="java.lang.String" itemvalue="Python.xarray" />
+        <item index="4" class="java.lang.String" itemvalue="Python.netcdfNew" />
       </list>
     </recent_temporary>
   </component>
@@ -502,7 +504,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -532,7 +534,7 @@
         <state relative-caret-position="1575">
           <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="113" selection-end-column="22" />
           <folding>
-            <element signature="e#1#13#0" expanded="true" />
+            <element signature="e#38#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -572,7 +574,7 @@
         <state relative-caret-position="1575">
           <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="113" selection-end-column="22" />
           <folding>
-            <element signature="e#1#13#0" expanded="true" />
+            <element signature="e#38#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -637,42 +639,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wind(t,r,a,e,datum).py">
+    <entry file="file://$PROJECT_DIR$/xarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="24" />
+        <state relative-caret-position="285">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding>
-            <element signature="e#1#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/csvToNcUpdate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#1#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
-          <folding>
-            <element signature="e#72#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/csvToNetCDF">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -687,9 +659,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/csvToNetCDF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2925">
+          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+          <folding>
+            <element signature="e#72#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wind(t,r,a,e,datum).py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
+          <folding>
+            <element signature="e#1#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/netcdfNew.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
+        <state relative-caret-position="1155">
           <caret line="84" column="9" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
@@ -697,22 +699,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nc.py">
+    <entry file="file://$PROJECT_DIR$/csvToNcUpdate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="388">
+          <caret line="130" column="18" selection-start-line="129" selection-start-column="0" selection-end-line="130" selection-end-column="18" />
           <folding>
             <element signature="e#1#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xarray.py">
+    <entry file="file://$PROJECT_DIR$/nc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#38#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ncAll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+          <folding>
+            <element signature="e#32#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

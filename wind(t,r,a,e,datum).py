@@ -33,6 +33,7 @@ for line in f[1:]:
 #print v1
 
 
+
 from netCDF4 import Dataset
 #rootgrp = Dataset("test.nc", "w", format="NETCDF4")
 #rootgrp = netCDF4.Dataset('station_data.nc','w')
@@ -44,12 +45,13 @@ print rootgrp.data_model
 #rootgrp.close()
 
 
+
 #ex
 '''
 lats_out = -25.0 + 5.0*arange(v4,dtype='float32')
 lons_out = -125.0 + 5.0*arange(v5,dtype='float32')
 '''
-
+'''
 az = numpy.arange(-180,180,2.5)
 el = numpy.arange(-180,180,2.5)
 #ranges = numpy.arange(100,3000, 25)
@@ -58,16 +60,17 @@ y = numpy.arange(-100,100,2.5)
 z = numpy.arange(-100,100,2.5)
 cnrs = numpy.arange(-100,100,2.5)
 conf = numpy.arange(0,100,100)
-
+'''
 #test
 #range_out = arange(v4,dtype='i8')
-rootgrp.createDimension('Range',None)
+'''
+
 Range = rootgrp.createVariable('Range',dtype('float32').char,('Range',))
 Range.units = 'm'
 ranges = numpy.arange(100,3000, )
 Range[:] = ranges
 Range = v4
-
+'''
 
 
 
@@ -88,16 +91,16 @@ conf = arange(v9, dtype='float32')
 ncout.createDimension('latitude',v4)
 ncout.createDimension('longitude',v5)
 '''
-
-rootgrp.createDimension('TimeStamp', None)
-rootgrp.createDimension('Azimuth',None)
-rootgrp.createDimension('Elevation',None)
-
-rootgrp.createDimension('xWind',None)
-rootgrp.createDimension('yWind',None)
-rootgrp.createDimension('zWind',None)
-rootgrp.createDimension('CNR',None)
-rootgrp.createDimension('ConfidenceIndex',None)
+#reconMeasure = rootgrp.createDimension('reconMeasure', None)
+TimeStamp = rootgrp.createDimension('TimeStamp', None)
+Azimuth = rootgrp.createDimension('Azimuth',100000000)
+Elevation = rootgrp.createDimension('Elevation',100000000)
+Range = rootgrp.createDimension('Range',100000000)
+xWind = rootgrp.createDimension('xWind',100000000)
+yWind = rootgrp.createDimension('yWind',100000000)
+zWind = rootgrp.createDimension('zWind',100000000)
+CNR = rootgrp.createDimension('CNR',None)
+ConfidenceIndex = rootgrp.createDimension('ConfidenceIndex',None)
 
 #printing the dimensions from python dictionary
 print rootgrp.dimensions
@@ -112,29 +115,46 @@ lats = ncout.createVariable('latitude',dtype('float32').char,('latitude',))
 lons = ncout.createVariable('longitude',dtype('float32').char,('longitude',))
 '''
 
-TimeStamp = rootgrp.createVariable('TimeStamp', dtype('float32').char, ('TimeStamp',))
-Azimuth = rootgrp.createVariable('Azimuth',dtype('float32').char,('Azimuth',))
-Elevation = rootgrp.createVariable('Elevation',dtype('float32').char,('Elevation',))
+TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))
+#Azimuth = rootgrp.createVariable('Azimuth',dtype('float32').char,('Azimuth',))
+#Elevation = rootgrp.createVariable('Elevation',dtype('float32').char,('Elevation',))
+#Range = rootgrp.createVariable('Range',dtype('float32').char,('Range',))
+#xWind = rootgrp.createVariable('xWind',dtype('float32').char,('xWind',))
+#yWind = rootgrp.createVariable('yWind',dtype('float32').char,('yWind',))
+#zWind = rootgrp.createVariable('zWind',dtype('float32').char,('zWind',))
+#CNR = rootgrp.createVariable('CNR',dtype('float32').char,('CNR',))
+#ConfidenceIndex = rootgrp.createVariable('ConfidenceIndex',dtype('float32').char,('ConfidenceIndex',))
 
-xWind = rootgrp.createVariable('xWind',dtype('float32').char,('xWind',))
-yWind = rootgrp.createVariable('yWind',dtype('float32').char,('yWind',))
-zWind = rootgrp.createVariable('zWind',dtype('float32').char,('zWind',))
-CNR = rootgrp.createVariable('CNR',dtype('float32').char,('CNR',))
-ConfidenceIndex = rootgrp.createVariable('ConfidenceIndex',dtype('float32').char,('ConfidenceIndex',))
-
-wind = rootgrp.createVariable('wind',dtype('float32').char,('TimeStamp', 'Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
+wind = rootgrp.createVariable('wind',"f4",('TimeStamp', 'Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
 wind.units = "m/s"
+
+print wind
+
+'''
+>>> levels = rootgrp.createVariable("level","i4",("level",))
+>>> latitudes = rootgrp.createVariable("latitude","f4",("lat",))
+>>> longitudes = rootgrp.createVariable("longitude","f4",("lon",))
+>>> # two dimensions unlimited
+>>> temp = rootgrp.createVariable("temp","f4",("time","level","lat","lon",))
+'''
+
+
+
+
 
 # Assign units attributes to coordinate var data. This attaches a text attribute to each of the coordinate variables,
 #  containing the units.
-Azimuth.units = "degrees"
-Elevation.units = "degrees"
+TimeStamp.units = "hours since 0001-01-01 00:00:00.0"
+TimeStamp.calendar = "gregorian"
+#Azimuth.units = "degrees"
+#Elevation.units = "degrees"
 
-xWind.units = 'm/s'
-yWind.units = 'm/s'
-zWind.units = 'm/s'
-CNR.units = 'db'
-ConfidenceIndex.units = '%'
+wind.units = 'm/s'
+#xWind.units = 'm/s'
+#yWind.units = 'm/s'
+#zWind.units = 'm/s'
+#CNR.units = 'db'
+#ConfidenceIndex.units = '%'
 
 # printing python dictionary with all the current variables
 print rootgrp.variables
@@ -155,18 +175,26 @@ for name in rootgrp.ncattrs():
 print rootgrp.__dict__
 
 # write data to coordinate vars.
-Azimuth[:] = az
-Elevation[:] = el
+#Azimuth[:] = az
+#Elevation[:] = el
 
-xWind[:] = x
-yWind[:] = y
-zWind[:] = z
-CNR[:] = cnrs
-ConfidenceIndex[:] = conf
+#xWind[:] = x
+#yWind[:] = y
+#zWind[:] = z
+#CNR[:] = cnrs
+#ConfidenceIndex[:] = conf
 
+from numpy.random import uniform
+#temp[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
+#wind[:] = uniform(size=(v2,v3,v4,v5,v6,v7))
+#wind[:, :, :, :, :, :] = [v2, v3, v4, v5, v6, v7]
+wind = [v2, v3, v4, v5, v6, v7]
+
+#wind[:] = az+el+x+y+z
 
 print "\n\n\n\n\n\n\n\n\nREPRINGING CHECK \n\n\n\n\n\n\n\n\n"
 
+print wind
 #print Range
 
 #reprinting check:

@@ -1,4 +1,4 @@
-#everything dumped into wind working
+#everything seperate variables
 
 import numpy
 import netCDF4

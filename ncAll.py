@@ -39,7 +39,7 @@ from netCDF4 import Dataset
 #rootgrp = Dataset("test.nc", "w", format="NETCDF4")
 #rootgrp = netCDF4.Dataset('station_data.nc','w')
 #convert to netcdf4 framework that works as a netcdf
-rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconData.nc', "w", format="NETCDF4")
+rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconDataVar.nc', "w", format="NETCDF4")
 #rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/wholeData.nc', "w", format="NETCDF4")
 print rootgrp.data_model
 #NETCDF4

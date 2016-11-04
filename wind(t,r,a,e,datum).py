@@ -1,4 +1,4 @@
-#everything seperate variables working + adding wind with everything
+#everything seperate variables working + adding wind with everything + TimeStamps working
 import csv
 import datetime, time
 import pandas

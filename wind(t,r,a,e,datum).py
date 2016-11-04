@@ -7,7 +7,7 @@ import netCDF4
 from stat import S_ISREG, ST_CTIME, ST_MODE
 import numpy
 import netCDF4
-import csv
+
 
 from numpy import arange, dtype
 
@@ -22,8 +22,8 @@ v7 = [] #Z-Wind Speed
 v8 = [] #CNR
 v9 = [] #Confidence
 
-f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
-#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
+#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
 
 '''
 with open("myfile.csv") as infile:
@@ -59,11 +59,14 @@ print rootgrp.data_model
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
+print v1
+
+
 # converts to date
-#datetime.datetime.strptime(v1, 'MM/DD/YYYY HH:MM:SS')
+#datetime.datetime.strptime(v1, 'HH:MM:SS')
 
 # converts to your requested string format
-#datetime.datetime.strftime(v1, "MM/DD/YYYY HH:MM:SS")
+#datetime.datetime.strftime(v1, "HH:MM:SS")
 
 '''
 timestamp = []

@@ -71,7 +71,8 @@ def extract_and_format_data_from_source(sourcefile):
    for row in obs_list:
       try:
          # get the timestamp from the first 29 characters in the first column
-         ob_timestamp = datetime.datetime.strptime(row[0][0:29],'[%a %b %d %H:%M:%S.%f %Y')
+         #ob_timestamp = datetime.datetime.strptime(row[0][0:29],'[%a %b %d %H:%M:%S.%f %Y')
+         ob_timestamp = datetime.datetime.strptime(row[0][0:7],'[%H:%M:%S.%f')
          # get the temperature from column 6, where 6 is the zero-indexed column number in the CSV
          ob_temp = float(row[6])
 

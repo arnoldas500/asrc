@@ -27,7 +27,7 @@ v1 = [] #TimeStamp  looks like 10/2/2016  12:00:00 AM
 
 
 
-f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 
 '''
 with open("myfile.csv") as infile:
@@ -38,15 +38,17 @@ v1=[]
 
 for line in f[1:]:
     fields = line.split(',')
-    v1.append(fields[0]) #TimeStamp
+    v1 = fields[0] #TimeStamp
 
-csv_in = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'rb')
+print v1
+
+csv_in = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'rb')
 reader = csv.reader(csv_in)
 
 v2 = [v1[1]]
 print v2
 
-date = datetime.datetime.strptime(v2, '%H:%M:%S')
+date = datetime.datetime.strptime(v1, '%Y-%m-%d %H:%M:%S')
 
 #for row in v1:
 #    date = datetime.datetime.strptime(row[0], '%H:%M:%S')

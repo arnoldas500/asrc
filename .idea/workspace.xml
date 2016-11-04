@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c38e897f-634c-472d-b780-e5e1266c4dcc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wind(t,r,a,e,datum).py" afterPath="$PROJECT_DIR$/wind(t,r,a,e,datum).py" />
-    </list>
+    <list default="true" id="c38e897f-634c-472d-b780-e5e1266c4dcc" name="Default" comment="" />
     <ignored path="asrc.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

@@ -27,13 +27,17 @@ v1 = [] #TimeStamp  looks like 10/2/2016  12:00:00 AM
 
 
 
-f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+
 
 '''
 with open("myfile.csv") as infile:
     for line in infile:
         appendtoNetcdf(line)
 '''
+'''
+working single time GOOD!!!!!
+
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 v1=[]
 
 for line in f[1:]:
@@ -54,6 +58,36 @@ date = datetime.datetime.strptime(v1, '%Y-%m-%d %H:%M:%S')
 #    date = datetime.datetime.strptime(row[0], '%H:%M:%S')
 
 d = dateutil.parser.parse('1 Jan 2012 12pm UTC') # its that robust!
+'''
+
+#times working for full file
+
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+v1 = [0] * 359295
+
+i=1
+for line in f[1:]:
+    fields = line.split(',')
+    v1[i] = fields[0] #TimeStamp
+    date = datetime.datetime.strptime(v1[i], '%Y-%m-%d %H:%M:%S')
+    #print v1[i]
+    i+=1
+
+print v1[200]
+
+#print v1[1]
+
+#csv_in = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'rb')
+#reader = csv.reader(csv_in)
+
+
+
+
+#for row in v1:
+#    date = datetime.datetime.strptime(row[0], '%H:%M:%S')
+
+#d = dateutil.parser.parse('1 Jan 2012 12pm UTC') # its that robust!
+
 
 
 '''

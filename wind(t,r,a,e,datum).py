@@ -22,14 +22,32 @@ v7 = [] #Z-Wind Speed
 v8 = [] #CNR
 v9 = [] #Confidence
 
-#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
-f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
+f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
+#f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
 
 '''
 with open("myfile.csv") as infile:
     for line in infile:
         appendtoNetcdf(line)
 '''
+
+epoch = datetime.datetime.utcfromtimestamp(0)
+
+times = [0] * 359295
+timestamp = []
+i=1
+for line in f[1:]:
+    fields = line.split(',')
+    times[i] = fields[0] #TimeStamp
+    date = datetime.datetime.strptime(times[i], '%Y-%m-%d %H:%M:%S')
+    timestamp.append((date - epoch).total_seconds())
+    #print timestamp
+    #print v1[i]
+    #print date
+    i+=1
+
+#print times[100]
+#print date
 
 for line in f[1:]:
     fields = line.split(',')
@@ -59,7 +77,7 @@ print rootgrp.data_model
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
-print v1
+
 
 
 # converts to date
@@ -241,6 +259,7 @@ z = numpy.arange(-100,100,2.5)
 cnrs = numpy.arange(-100,100,2.5)
 conf = numpy.arange(0,100,100)
 
+TimeStamp[:] = timestamp
 Azimuth[:] = v2
 Elevation[:] = v3
 Range[:] = v4

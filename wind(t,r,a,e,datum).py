@@ -1,6 +1,7 @@
 #everything seperate variables working + adding wind with everything
 import csv
 import datetime, time
+import pandas
 import os, sys
 import netCDF4
 from stat import S_ISREG, ST_CTIME, ST_MODE
@@ -44,6 +45,7 @@ for line in f[1:]:
 #more variables included but this is just an abridged list
 #print v1
 
+#print v1
 
 from netCDF4 import Dataset
 #rootgrp = Dataset("test.nc", "w", format="NETCDF4")
@@ -57,13 +59,19 @@ print rootgrp.data_model
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
+# converts to date
+#datetime.datetime.strptime(v1, 'MM/DD/YYYY HH:MM:SS')
 
+# converts to your requested string format
+#datetime.datetime.strftime(v1, "MM/DD/YYYY HH:MM:SS")
+
+'''
 timestamp = []
 for row in v1:
   try:
      # get the timestamp from the first 29 characters in the first column 10/2/2016  12:00:00 AM
      # old time [Mon Sep 01 10:22:19.742 2014]
-     ob_timestamp = datetime.datetime.strptime(row[0][0:21],'%a/%b/%d  %H:%M:%S %p%m')
+     ob_timestamp = datetime.datetime.strptime(row[0][0:21],'%a-%b-%d  %H:%M:%S')
      #ob_timestamp = datetime.datetime.strptime(row[0][0:29],'[%a %b %d %H:%M:%S.%f %Y')
      # get the temperature from column 6, where 6 is the zero-indexed column number in the CSV
      print ob_timestamp
@@ -74,7 +82,7 @@ for row in v1:
 
   except Exception, e:
      print('error in row: ' + str(row) +' in '+ '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv')
-
+'''
 #ex
 '''
 lats_out = -25.0 + 5.0*arange(v4,dtype='float32')

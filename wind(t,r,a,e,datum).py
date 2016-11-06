@@ -1,4 +1,5 @@
 #everything seperate variables working + adding wind with everything + TimeStamps working
+#+ currently working on coordinate variables to work in wind and winds
 import csv
 import datetime, time
 import pandas
@@ -10,6 +11,10 @@ import netCDF4
 
 
 from numpy import arange, dtype
+
+# lat/lon of random location for testing
+station_lat   = 50.317993
+station_lon   = -4.189128
 
 #Declare empty array for storing csv data
 v1 = [] #TimeStamp  looks like 10/2/2016  12:00:00 AM
@@ -149,6 +154,9 @@ conf = arange(v9, dtype='float32')
 ncout.createDimension('latitude',v4)
 ncout.createDimension('longitude',v5)
 '''
+#testing lats / lons dimensions
+lat = rootgrp.createDimension("lat", 73)
+lon = rootgrp.createDimension("lon", 144)
 
 #reconMeasure = rootgrp.createDimension('reconMeasure', None)
 TimeStamp = rootgrp.createDimension('TimeStamp', None)
@@ -212,9 +220,21 @@ ConfidenceIndex = rootgrp.createVariable("ConfidenceIndex", "u1", ("ConfidenceIn
 ConfidenceIndex.standard_name = 'Confidence index'
 ConfidenceIndex.units = '%'
 
-wind = rootgrp.createVariable('wind',"f8",('Range', 'Azimuth', 'Elevation', 'xWind', 'yWind', 'zWind',))
-wind.standard_name = 'x y z wind'
+wind = rootgrp.createVariable('wind',"f8",('TimeStamp', 'zWind',))
+wind.standard_name = 'timestamp z wind'
 wind.units = "m/s"
+
+#testing lat/lon variables for coordinate variables
+latitudes = rootgrp.createVariable("latitude","f4",("lat",))
+latitudes.units = "degrees north"
+longitudes = rootgrp.createVariable("longitude","f4",("lon",))
+longitudes.units = "degrees east"
+
+winds = rootgrp.createVariable("winds","f4",("TimeStamp","xWind","yWind","zWind","lat","lon",))
+winds.units = "m/s"
+
+#print summary of winds variable
+print winds
 
 # printing python dictionary with all the current variables
 print rootgrp.variables
@@ -259,6 +279,15 @@ z = numpy.arange(-100,100,2.5)
 cnrs = numpy.arange(-100,100,2.5)
 conf = numpy.arange(0,100,100)
 
+
+
+
+#adding data to lats and longs
+lats =  numpy.arange(-90,91,2.5)
+lons =  numpy.arange(-180,180,2.5)
+latitudes[:] = lats
+longitudes[:] = lons
+#assignming data to everything
 TimeStamp[:] = timestamp
 Azimuth[:] = v2
 Elevation[:] = v3
@@ -270,21 +299,36 @@ CNR[:] = v8
 ConfidenceIndex[:] = v9
 #wind[:,:,:,:,:,:] = v2,v3,v4,v5,v6,v7
 
+# appending along two unlimited dimensions by assigning to slice
+nlats = len(rootgrp.dimensions["lat"])
+nlons = len(rootgrp.dimensions["lon"])
+
 nAzimuth = len(rootgrp.dimensions["Azimuth"])
 nElevation = len(rootgrp.dimensions["Elevation"])
 nRange = len(rootgrp.dimensions["Range"])
 nxWind = len(rootgrp.dimensions["xWind"])
 nyWind = len(rootgrp.dimensions["yWind"])
 nzWind = len(rootgrp.dimensions["zWind"])
+ntime = len(timestamp)
 
-
+print ntime
+print nzWind
+print "winds shape before adding data = ",winds.shape
 print "wind shape before adding data = ",wind.shape
 #wind[:,:,:,:,:,:] = []
 
 from numpy.random import uniform
 #wind[:] = np.asarray(v2)
-print "temp shape after adding data = ",wind.shape
+from numpy.random import uniform
+
+#winds[0:5,0:10,0:10,0:10,:,:] = uniform(size=(5,10,10,10,nlats,nlons))
+wind[0:359294,0:359294] = uniform(size=(359294,359294))
+#winds[:,:,:,:,:,:] = uniform(size=(ntime,ntime,ntime,ntime,nlats,nlons))
+print "winds shape after adding data = ",winds.shape
+print "wind shape before adding data = ",wind.shape
 #np.asarray(v)
+
+
 
 
 '''
@@ -304,25 +348,12 @@ from numpy.random import uniform
 #temp[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
 #wind[:] = (v2,v3)
 #wind[:,:] = (Azimuth,Elevation)
-
+print ntime
 print "****************\n\n\n\n\n\n\n********************"
 
 #print wind
 
 #print "Range =\n", Range[:]
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))

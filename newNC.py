@@ -106,19 +106,23 @@ for dimobj in rootgrp.dimensions.values():
 
 
 # create the variables
-TimeStamp = rootgrp.createVariable("TimeStamp","f8",("TimeStamp",))
-TimeStamp.standard_name = 'TimeStamp'
-TimeStamp.long_name = 'Time of measurement'
-TimeStamp.units = 'seconds since 1970-01-01 00:00:00'
+Time = rootgrp.createVariable("times","f8",("TimeStamp",))
+Time.standard_name = 'TimeStamp'
+Time.long_name = 'Time of measurement'
+Time.units = 'seconds since 1970-01-01 00:00:00'
 
 Range = rootgrp.createVariable("Range", "f4", ("Range",))
 Range.standard_name = 'Range'
 Range.units = 'm'
 
+Wind = rootgrp.createVariable("xWind", "i8", ("TimeStamp",))
+Wind.standard_name = 'X-Wind Speed'
+Wind.units = 'm/s'
+'''
 xWind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
 xWind.standard_name = 'X-Wind Speed'
 xWind.units = 'm/s'
-
+'''
 yWind = rootgrp.createVariable("yWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
 yWind.standard_name = 'Y-Wind Speed'
 yWind.units = 'm/s'
@@ -183,13 +187,13 @@ ranges = numpy.arange(100,10000,25)
 latitudes[:] = lats
 longitudes[:] = lons
 #assignming data to everything
-TimeStamp[:] = timestamp
+Time[:] = timestamp
 #Azimuth[:] = v2
 #Elevation[:] = v3
-Range[:] = v4
-xWind[:] = v5
-yWind[:] = v6
-zWind[:] = v7
+#Range[:] = v4
+#xWind[:] = timestamp,v4,lats,lons
+#yWind[:] = v6
+#zWind[:] = v7
 #CNR[:] = v8
 #ConfidenceIndex[:] = v9
 #wind[:,:,:,:,:,:] = v2,v3,v4,v5,v6,v7
@@ -197,18 +201,20 @@ zWind[:] = v7
 # appending along two unlimited dimensions by assigning to slice
 nlats = len(rootgrp.dimensions["lat"])
 nlons = len(rootgrp.dimensions["lon"])
-
-nAzimuth = len(rootgrp.dimensions["Azimuth"])
-nElevation = len(rootgrp.dimensions["Elevation"])
 nRange = len(rootgrp.dimensions["Range"])
-nxWind = len(rootgrp.dimensions["xWind"])
-nyWind = len(rootgrp.dimensions["yWind"])
-nzWind = len(rootgrp.dimensions["zWind"])
 ntime = len(timestamp)
+#nAzimuth = len(rootgrp.dimensions["Azimuth"])
+#nElevation = len(rootgrp.dimensions["Elevation"])
+
+#nxWind = len(rootgrp.dimensions["xWind"])
+#nyWind = len(rootgrp.dimensions["yWind"])
+#nzWind = len(rootgrp.dimensions["zWind"])
+
 
 print ntime
-print nzWind
-#print "winds shape before adding data = ",winds.shape
+print nRange
+
+#print "windx shape before adding data = ",xWind.shape
 #print "wind shape before adding data = ",wind.shape
 #wind[:,:,:,:,:,:] = []
 
@@ -219,12 +225,18 @@ from numpy.random import uniform
 #winds[0:5,0:10,0:10,0:10,:,:] = uniform(size=(5,10,10,10,nlats,nlons))
 #wind[0:359294,0:359294] = uniform(size=(359294,359294))
 #winds[:,:,:,:,:,:] = uniform(size=(ntime,ntime,ntime,ntime,nlats,nlons))
-#print "winds shape after adding data = ",winds.shape
+#xWind[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
+#print "windx shape after adding data = ",xWind.shape
 #print "wind shape before adding data = ",wind.shape
 #np.asarray(v)
 
+print "ranges shape after adding  data = ",ranges.shape
+print "Range shape after adding  data = ",Range.shape
 
+Range[:] = v4
+Wind[:] = v5
 
+print "wind shape after adding data = ",Wind.shape
 
 '''
 # append along two unlimited dimensions by assigning to slice.

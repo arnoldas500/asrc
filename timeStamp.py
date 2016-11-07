@@ -10,6 +10,27 @@ import netCDF4
 import csv
 import dateutil.parser
 
+
+az = numpy.arange(-180,180,2.5)
+el = numpy.arange(-180,180,2.5)
+
+x = numpy.arange(-100,100,2.5)
+y = numpy.arange(-100,100,2.5)
+z = numpy.arange(-100,100,2.5)
+cnrs = numpy.arange(-100,100,2.5)
+conf = numpy.arange(0,100,100)
+
+
+test = x, y, z
+print test
+
+
+
+
+
+
+
+
 '''
 with open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'rb') as f:
     reader = csv.reader(f, delimiter='\t')

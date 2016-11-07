@@ -39,8 +39,8 @@ xmldoc = minidom.parse('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/2016
 itemlist = xmldoc.getElementsByTagName('scan')
 #print "Len : ", len(itemlist)
 print "Attribute Name : ", itemlist[0].attributes['display_resolution_m'].value
-
-
+rangeXML = itemlist[0].attributes['display_resolution_m'].value
+print int(rangeXML)
 
 '''
 from lxml import etree
@@ -156,7 +156,7 @@ Range = rootgrp.createVariable("Range", "f4", ("Range",))
 Range.standard_name = 'Range'
 Range.units = 'm'
 
-Wind = rootgrp.createVariable("xWind", "i8", ("TimeStamp",))
+Wind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "lat", "lon"))
 Wind.standard_name = 'X-Wind Speed'
 Wind.units = 'm/s'
 '''
@@ -221,12 +221,17 @@ conf = numpy.arange(0,100,100)
 
 
 
+
 #adding data to lats and longs
 lats =  numpy.arange(-90,91,2.5)
 lons =  numpy.arange(-180,180,2.5)
-ranges = numpy.arange(100,10000,25)
+ranges = numpy.arange(100,3000,int(rangeXML))
 latitudes[:] = lats
 longitudes[:] = lons
+
+latlontest = lats, lons
+print latlontest
+
 #assignming data to everything
 Time[:] = timestamp
 #Azimuth[:] = v2
@@ -266,8 +271,8 @@ from numpy.random import uniform
 #winds[0:5,0:10,0:10,0:10,:,:] = uniform(size=(5,10,10,10,nlats,nlons))
 #wind[0:359294,0:359294] = uniform(size=(359294,359294))
 #winds[:,:,:,:,:,:] = uniform(size=(ntime,ntime,ntime,ntime,nlats,nlons))
-#xWind[0:5,0:10,:,:] = uniform(size=(5,10,nlats,nlons))
-#print "windx shape after adding data = ",xWind.shape
+Wind[0:5,:,:] = uniform(size=(5,nlats,nlons))
+print "windx shape after adding data = ",Wind.shape
 #print "wind shape before adding data = ",wind.shape
 #np.asarray(v)
 
@@ -275,7 +280,7 @@ print "ranges shape after adding  data = ",ranges.shape
 print "Range shape after adding  data = ",Range.shape
 
 Range[:] = v4
-Wind[:] = v5
+#Wind[:] = v5
 
 print "wind shape after adding data = ",Wind.shape
 

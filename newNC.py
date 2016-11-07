@@ -10,6 +10,39 @@ import numpy
 import netCDF4
 
 
+#parsing an xml document
+'''
+EX:
+<data>
+    <items>
+        <item name="item1">item1</item>
+        <item name="item2">item2</item>
+        <item name="item3">item3</item>
+        <item name="item4">item4</item>
+    </items>
+</data>
+
+from xml.dom import minidom
+xmldoc = minidom.parse('items.xml')
+itemlist = xmldoc.getElementsByTagName('item')
+print "Len : ", len(itemlist)
+print "Attribute Name : ", itemlist[0].attributes['name'].value
+print "Text : ", itemlist[0].firstChild.nodeValue
+for s in itemlist :
+    print "Attribute Name : ", s.attributes['name'].value
+    print "Text : ", s.firstChild.nodeValue
+
+'''
+
+
+from lxml import etree
+doc = etree.parse(filename)
+
+memoryElem = doc.find('memory')
+print memoryElem.text        # element text
+print memoryElem.get('unit') # attribute
+
+
 from numpy import arange, dtype
 
 # lat/lon of random location for testing

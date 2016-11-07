@@ -33,15 +33,23 @@ for s in itemlist :
     print "Text : ", s.firstChild.nodeValue
 
 '''
+#parsing xml document to get range steps
+from xml.dom import minidom
+xmldoc = minidom.parse('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_scan.xml')
+itemlist = xmldoc.getElementsByTagName('scan')
+#print "Len : ", len(itemlist)
+print "Attribute Name : ", itemlist[0].attributes['display_resolution_m'].value
 
 
+
+'''
 from lxml import etree
 doc = etree.parse(filename)
 
 memoryElem = doc.find('memory')
 print memoryElem.text        # element text
 print memoryElem.get('unit') # attribute
-
+'''
 
 from numpy import arange, dtype
 

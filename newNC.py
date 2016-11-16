@@ -7,6 +7,7 @@ import os, sys
 import netCDF4
 from stat import S_ISREG, ST_CTIME, ST_MODE
 import numpy
+import numpy as np
 import netCDF4
 
 
@@ -77,6 +78,8 @@ with open("myfile.csv") as infile:
     for line in infile:
         appendtoNetcdf(line)
 '''
+
+
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
@@ -232,6 +235,43 @@ longitudes[:] = lons
 latlontest = lats, lons
 print latlontest
 
+nt = len(timestamp)
+nr = len(v4)
+'''
+nodalNew = []
+for i in range(nt):
+    for j in range(nr):
+        nodalNew = nodalNew + [j*nt+i]
+
+ # Reshape for 2D
+my_data = np.reshape(nodalNew,(nt,nr),'F')
+'''
+#adding timestamp and range to array a to store it into data
+a = np.array([timestamp, v4])
+
+#print a
+
+'''
+# coordinate information:
+x_coord = [0,2,4,6,8,10,12]
+y_coord = [0, 5, 10]
+
+# number of points:
+nx = len(x_coord)
+ny = len(y_coord)
+
+# Create a nodal data variable
+nodal = []
+for i in range(nx):
+    for j in range(ny):
+        nodal = nodal + [j*nx + i]
+
+
+ # Reshape for 2D
+my_data = np.reshape(var,(ny,nx),'F')
+'''
+
+
 #assignming data to everything
 Time[:] = timestamp
 #Azimuth[:] = v2
@@ -281,6 +321,13 @@ print "Range shape after adding  data = ",Range.shape
 
 Range[:] = v4
 #Wind[:] = v5
+
+# Create data variable in NetCDF.
+data = rootgrp.createVariable('data', 'd', ('TimeStamp','Range'))
+
+# transfer the data variables:
+data[:] = a
+
 
 print "wind shape after adding data = ",Wind.shape
 

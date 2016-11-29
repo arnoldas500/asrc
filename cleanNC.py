@@ -21,6 +21,7 @@ station_lat   = 50.317993
 station_lon   = -4.189128
 
 #Declare empty array for storing csv data
+obs = [] #all rows from csv having x,y,z winds and range
 v1 = [] #TimeStamp  looks like 10/2/2016  12:00:00 AM
 v2 = [] #Azimuth
 v3 = [] #Elevation
@@ -64,18 +65,24 @@ for line in f[1:]:
     v7.append(float(fields[6]))#Z-Wind Speed
     v8.append(float(fields[7]))#CNR
     v9.append(float(fields[8]))#Confidence
-#more variables included but this is just an abridged list
-#print v1
 
-#print v1
+#storing observation info into obs
+#obs contains all x,y,z winds and range
+for line in f[1:]:
+    fields = line.split(',')
+    obs.append(float(fields[3]))#Range
+    obs.append(float(fields[4]))#X-Wind Speed
+    obs.append(float(fields[5]))#Y-Wind Speed
+    obs.append(float(fields[6]))#Z-Wind Speed
+
+print "obs contains : ", obs
+#more variables included but this is just an abridged list
 
 from netCDF4 import Dataset
 
 rootgrp = Dataset('/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/reconData.nc', "w", format="NETCDF4")
 print rootgrp.data_model
 
-
-epoch = datetime.datetime.utcfromtimestamp(0)
 
 #dimensions
 TimeStamp = rootgrp.createDimension('TimeStamp', None)
@@ -102,9 +109,6 @@ Range = rootgrp.createVariable("Range", "f4", ("Range",))
 Range.standard_name = 'Range'
 Range.units = 'm'
 
-Wind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "lat", "lon"))
-Wind.standard_name = 'X-Wind Speed'
-Wind.units = 'm/s'
 '''
 xWind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
 xWind.standard_name = 'X-Wind Speed'
@@ -114,7 +118,7 @@ yWind = rootgrp.createVariable("yWind", "i8", ("TimeStamp", "Range", "lat", "lon
 yWind.standard_name = 'Y-Wind Speed'
 yWind.units = 'm/s'
 
-zWind = rootgrp.createVariable("zWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
+zWind = rootgrp.createVariable("zWind", 'd', ("TimeStamp", "Range", "lat", "lon"))
 zWind.standard_name = 'Z-Wind Speed'
 zWind.units = 'm/s'
 
@@ -188,7 +192,11 @@ my_data = np.reshape(var,(ny,nx),'F')
 
 
 #assignming data to everything
-Time[:] = timestamp
+distinctTimes = numpy.unique(timestamp)
+
+print "number of distinct times is: ", distinctTimes
+
+Time[:] = distinctTimes
 
 # appending along two unlimited dimensions by assigning to slice
 nlats = len(rootgrp.dimensions["lat"])
@@ -203,14 +211,16 @@ print nRange
 
 from numpy.random import uniform
 
-Wind[0:5,:,:] = uniform(size=(5,nlats,nlons))
+#Wind[0:5,:,:] = uniform(size=(5,nlats,nlons))
 
-print "windx shape after adding data = ",Wind.shape
+#print "windx shape after adding data = ",Wind.shape
 #print "wind shape before adding data = ",wind.shape
 #np.asarray(v)
 
 print "ranges shape after adding  data = ",ranges.shape
 print "Range shape after adding  data = ",Range.shape
+
+
 
 Range[:] = v4
 #Wind[:] = v5
@@ -246,16 +256,21 @@ data = rootgrp.createVariable('data', 'd', ('TimeStamp','Range'))
 xlen = len(v5)
 nt = len(timestamp)
 nr = len(v4)
-array = np.array([v5])
+arrayXwind = np.array([v5])
+arrayZwind = np.array([v7])
 
+print "\n\n\n\n"
+#print "the z wind is ", arrayZwind
+print "\n\n\n\n"
 #a = np.arange(xlen).reshape((nt+nr))
 #my_data = np.reshape(v5, (nt,nr), 'F')
 
 # transfer the data variables:
-data[:] = array
+#data[:,:] = [v5,v5]
+#zWind[:,:,1,1] = [v5,v5,v5,v5]
 
 
-print "wind shape after adding data = ",Wind.shape
+#print "wind shape after adding data = ",Wind.shape
 
 print "****************\n\n\n\n\n\n\n********************"
 

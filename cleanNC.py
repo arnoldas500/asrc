@@ -5,6 +5,7 @@
 import datetime, time
 import numpy
 import numpy as np
+from numpy import arange
 import netCDF4
 
 #parsing xml document to get range steps
@@ -21,7 +22,8 @@ station_lat   = 50.317993
 station_lon   = -4.189128
 
 #Declare empty array for storing csv data
-obs = [] #all rows from csv having x,y,z winds and range
+observation = [] #all rows from csv having x,y,z winds and range
+testobs=[]
 v1 = [] #TimeStamp  looks like 10/2/2016  12:00:00 AM
 v2 = [] #Azimuth
 v3 = [] #Elevation
@@ -66,17 +68,27 @@ for line in f[1:]:
     v8.append(float(fields[7]))#CNR
     v9.append(float(fields[8]))#Confidence
 
+'''
 #storing observation info into obs
 #obs contains all x,y,z winds and range
 for line in f[1:]:
     fields = line.split(',')
-    obs.append(float(fields[3]))#Range
-    obs.append(float(fields[4]))#X-Wind Speed
-    obs.append(float(fields[5]))#Y-Wind Speed
-    obs.append(float(fields[6]))#Z-Wind Speed
+    observation.append(float(fields[3]))#Range
+    observation.append(float(fields[4]))#X-Wind Speed
+    observation.append(float(fields[5]))#Y-Wind Speed
+    observation.append(float(fields[6]))#Z-Wind Speed
+
+#print "observation contains : ", observation
+print "observation length is : ", len(observation)
+#more variables included but this is just an abridged list
+
+testobs = arange(int(v4)*int(v5)*int(v6)*int(v7))
 
 print "obs contains : ", obs
-#more variables included but this is just an abridged list
+'''
+
+
+observation = len(v4)
 
 from netCDF4 import Dataset
 
@@ -85,10 +97,14 @@ print rootgrp.data_model
 
 
 #dimensions
+'''
 TimeStamp = rootgrp.createDimension('TimeStamp', None)
 Range = rootgrp.createDimension('Range',None)
 lat = rootgrp.createDimension("lat", 73)
 lon = rootgrp.createDimension("lon", 144)
+'''
+obs = rootgrp.createDimension('obs', None)
+profile = rootgrp.createDimension('profile', None)
 
 
 #printing the dimensions from python dictionary
@@ -100,52 +116,24 @@ for dimobj in rootgrp.dimensions.values():
 
 
 # create the variables
-Time = rootgrp.createVariable("times","f8",("TimeStamp",))
+Row_size = rootgrp.createVariable("Row_size", "i8", ("profile",))
+Row_size.standard_name = 'Row size'
+
+Profile = rootgrp.createVariable("Profile", "i8", ("profile",))
+Profile.standard_name = 'Profile'
+
+Time = rootgrp.createVariable("Time","f8",("profile",))
 Time.standard_name = 'TimeStamp'
 Time.long_name = 'Time of measurement'
 Time.units = 'seconds since 1970-01-01 00:00:00'
 
-Range = rootgrp.createVariable("Range", "f4", ("Range",))
+Range = rootgrp.createVariable("Range", "f4", ("obs",))
 Range.standard_name = 'Range'
 Range.units = 'm'
 
-'''
-xWind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
-xWind.standard_name = 'X-Wind Speed'
-xWind.units = 'm/s'
-'''
-yWind = rootgrp.createVariable("yWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
-yWind.standard_name = 'Y-Wind Speed'
-yWind.units = 'm/s'
-
-zWind = rootgrp.createVariable("zWind", 'd', ("TimeStamp", "Range", "lat", "lon"))
-zWind.standard_name = 'Z-Wind Speed'
-zWind.units = 'm/s'
-
-#testing lat/lon variables for coordinate variables
-latitudes = rootgrp.createVariable("latitude","f4",("lat",))
-latitudes.units = "degrees north"
-
-longitudes = rootgrp.createVariable("longitude","f4",("lon",))
-longitudes.units = "degrees east"
-
-'''
-Azimuth = rootgrp.createVariable("Azimuth", "i8" , ("Azimuth",))
-Azimuth.standard_name = 'Azimuth'
-Azimuth.units = "degrees"
-
-Elevation = rootgrp.createVariable("Elevation", "f8", ("Elevation",))
-Elevation.standard_name = 'Elevation'
-Elevation.units = "degrees"
-
-CNR = rootgrp.createVariable("CNR", "i8", ("CNR",))
+CNR = rootgrp.createVariable("CNR", "i8", ("obs",))
 CNR.standard_name = 'CNR'
 CNR.units = 'db'
-
-ConfidenceIndex = rootgrp.createVariable("ConfidenceIndex", "u1", ("ConfidenceIndex",))
-ConfidenceIndex.standard_name = 'Confidence index'
-ConfidenceIndex.units = '%'
-'''
 
 
 # printing python dictionary with all the current variables
@@ -162,8 +150,7 @@ rootgrp.source = "netCDF4 python module"
 lats =  numpy.arange(-90,91,2.5)
 lons =  numpy.arange(-180,180,2.5)
 ranges = numpy.arange(100,3000,int(rangeXML))
-latitudes[:] = lats
-longitudes[:] = lons
+
 
 latlontest = lats, lons
 print latlontest
@@ -197,17 +184,19 @@ distinctTimes = numpy.unique(timestamp)
 print "number of distinct times is: ", distinctTimes
 
 Time[:] = distinctTimes
+Profile[:] = distinctTimes
+Range[:] = v4
+CNR[:] = v8
+#Row_size[:] =
+#profile_tab = table(rec$Timestamp)
 
 # appending along two unlimited dimensions by assigning to slice
-nlats = len(rootgrp.dimensions["lat"])
-nlons = len(rootgrp.dimensions["lon"])
-nRange = len(rootgrp.dimensions["Range"])
 ntime = len(timestamp)
 
 
 
 print ntime
-print nRange
+
 
 from numpy.random import uniform
 
@@ -222,7 +211,7 @@ print "Range shape after adding  data = ",Range.shape
 
 
 
-Range[:] = v4
+
 #Wind[:] = v5
 
 
@@ -250,7 +239,7 @@ array([[0, 1],
 #print my_data
 
 #print a
-
+'''
 # Create data variable in NetCDF.
 data = rootgrp.createVariable('data', 'd', ('TimeStamp','Range'))
 xlen = len(v5)
@@ -258,7 +247,7 @@ nt = len(timestamp)
 nr = len(v4)
 arrayXwind = np.array([v5])
 arrayZwind = np.array([v7])
-
+'''
 print "\n\n\n\n"
 #print "the z wind is ", arrayZwind
 print "\n\n\n\n"

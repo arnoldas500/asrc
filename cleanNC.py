@@ -67,6 +67,20 @@ for line in f[1:]:
     v7.append(float(fields[6]))#Z-Wind Speed
     v8.append(float(fields[7]))#CNR
     v9.append(float(fields[8]))#Confidence
+'''
+mylist = v1
+mydict = {}
+for i in mylist:
+    if i in mydict: mydict[i] += 1
+    else: mydict[i] = 1
+
+mytups = [(i, mydict[i]) for i in mydict]
+
+#print mytups
+print "length of dis tuples is :", len(mytups)
+print mydict
+print "length of mydict is :", len(mydict)
+'''
 
 '''
 #storing observation info into obs
@@ -176,7 +190,19 @@ for i in range(nx):
  # Reshape for 2D
 my_data = np.reshape(var,(ny,nx),'F')
 '''
+mylist = timestamp
+mydict = {}
+for i in mylist:
+    if i in mydict: mydict[i] += 1
+    else: mydict[i] = 1
 
+mytups = [(i, mydict[i]) for i in mydict]
+
+testDist = [(mydict[i]) for i in mydict]
+
+print "length of dis tuples is :", len(mytups)
+print testDist
+print "length of mydict is :", len(testDist)
 
 #assignming data to everything
 distinctTimes = numpy.unique(timestamp)
@@ -187,7 +213,7 @@ Time[:] = distinctTimes
 Profile[:] = distinctTimes
 Range[:] = v4
 CNR[:] = v8
-#Row_size[:] =
+Row_size[:] = testDist
 #profile_tab = table(rec$Timestamp)
 
 # appending along two unlimited dimensions by assigning to slice

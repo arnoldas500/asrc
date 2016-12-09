@@ -52,7 +52,7 @@ v9 = [] #Confidence
 
 sourcefolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/'
 targetfolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/'
-outputfilenameprefix = 'netCDFData'
+outputfilenameprefix = 'NetCDFData'
 
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
@@ -69,19 +69,29 @@ def csv_to_list(csv_file, delimiter=','):
 def FormatingDataFromSource(sourceFile):
     #obs_list = csv_to_list(sourceFile)
 
+    print inspect.getfile(inspect.currentframe()) # script filename (usually with path)
+    print os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
+
+    f = open(sourceFile, 'r')
+    print sys.argv[0]
+    print os.path.basename(sys.argv[0])
+    currentFile = os.path.basename(f.name)
+    print("currently working with ", currentFile)
+
+    runningFile = open(sourceFile, 'r').readlines()
     try:
         targetfilename = outputfilenameprefix+'.nc'
-        targetfile = targetfolder + targetfilename
+        targetfile = targetfolder + currentFile[0:23] + targetfilename
     except Exception, e:
        print 'error processing file, skipped: '+ sourceFile
        return
 
-    f = open(sourceFile, 'r').readlines()
+
 
     times = [0] * 359295
     timestamp = []
     i=1
-    for line in f[1:]:
+    for line in runningFile[1:]:
         fields = line.split(',')
         times[i] = fields[0] #TimeStamp
         date = datetime.datetime.strptime(times[i], '%Y-%m-%d %H:%M:%S')
@@ -94,7 +104,7 @@ def FormatingDataFromSource(sourceFile):
     #print times[100]
     #print date
 
-    for line in f[1:]:
+    for line in runningFile[1:]:
         fields = line.split(',')
         v1.append(fields[0]) #TimeStamp
         v2.append(float(fields[1]))#Azimuth

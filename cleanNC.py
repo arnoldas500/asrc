@@ -4,6 +4,7 @@
 
 import datetime, time
 import numpy
+import sys
 import numpy as np
 from numpy import arange
 import netCDF4
@@ -33,6 +34,10 @@ v6 = [] #Y-Wind Speed
 v7 = [] #Z-Wind Speed
 v8 = [] #CNR
 v9 = [] #Confidence
+
+
+sourcefolder = directory_name=sys.argv[1]
+targetfolder = directory_name=sys.argv[2]
 
 f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 #f = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()

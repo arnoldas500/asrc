@@ -44,14 +44,14 @@ v8 = [] #CNR
 v9 = [] #Confidence
 
 
-#sourcefolder = directory_name=sys.argv[1]
-#targetfolder = directory_name=sys.argv[2]
+sourcefolder = directory_name=sys.argv[1]
+targetfolder = directory_name=sys.argv[2]
 
 #with open(sys.argv[1], 'r') as my_file:
 #    print(my_file.read())
 
-sourcefolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/'
-targetfolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/'
+#sourcefolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/'
+#targetfolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/'
 outputfilenameprefix = 'NetCDFData'
 
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
@@ -91,16 +91,19 @@ def FormatingDataFromSource(sourceFile):
     times = [0] * 359295
     timestamp = []
     i=1
-    for line in runningFile[1:]:
-        fields = line.split(',')
-        times[i] = fields[0] #TimeStamp
-        date = datetime.datetime.strptime(times[i], '%Y-%m-%d %H:%M:%S')
-        timestamp.append((date - epoch).total_seconds())
-        #print timestamp
-        #print v1[i]
-        #print date
-        i+=1
-
+    try:
+        for line in runningFile[1:]:
+            fields = line.split(',')
+            times[i] = fields[0] #TimeStamp
+            date = datetime.datetime.strptime(times[i], '%Y-%m-%d %H:%M:%S')
+            timestamp.append((date - epoch).total_seconds())
+            #print timestamp
+            #print v1[i]
+            #print date
+            i+=1
+    except Exception, e:
+       print('error in line: ' + str(line) +' in '+ sourceFile)
+       return
     #print times[100]
     #print date
 

@@ -162,11 +162,11 @@ Range.units = 'm'
 Wind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "lat", "lon"))
 Wind.standard_name = 'X-Wind Speed'
 Wind.units = 'm/s'
-'''
+
 xWind = rootgrp.createVariable("xWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
 xWind.standard_name = 'X-Wind Speed'
 xWind.units = 'm/s'
-'''
+
 yWind = rootgrp.createVariable("yWind", "i8", ("TimeStamp", "Range", "lat", "lon"))
 yWind.standard_name = 'Y-Wind Speed'
 yWind.units = 'm/s'

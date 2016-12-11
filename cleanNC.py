@@ -42,7 +42,6 @@ outputfilenameprefix = 'NetCDFData'
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
 #Index of /private/enhanced/lidar_raw/CESTM_roof-76/2016/10
 
-epoch = datetime.datetime.utcfromtimestamp(0)
 
 #first need to open the csv file and store everything into a list
 def csv_to_list(csv_file, delimiter=','):
@@ -52,6 +51,7 @@ def csv_to_list(csv_file, delimiter=','):
 
 def FormatingDataFromSource(sourceFile):
     #obs_list = csv_to_list(sourceFile)
+    epoch = datetime.datetime.utcfromtimestamp(0)
 
     print "Current directory and program running: "
     print os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
@@ -63,6 +63,9 @@ def FormatingDataFromSource(sourceFile):
     print("currently working on file: ", currentFile)
     print "\n"
 
+    row_count = sum(1 for row in f)
+    print "total csv rows are: ", row_count
+
     runningFile = open(sourceFile, 'r').readlines()
     try:
         targetfilename = outputfilenameprefix+'.nc'
@@ -71,7 +74,7 @@ def FormatingDataFromSource(sourceFile):
        print 'error processing file, skipped: '+ sourceFile
        return
 
-    times = [0] * 359295
+    times = [0] * int(row_count)
     timestamp = []
     i=1
     try:
@@ -194,6 +197,7 @@ def FormatingDataFromSource(sourceFile):
     rootgrp.creator_name = 'Arnoldas Kurbanovas'
     rootgrp.creator_email = 'akurbanovas@albany.edu'
 
+    print "timestamp", timestamp
     mylist = timestamp
     mydict = {}
     for i in mylist:

@@ -31,13 +31,15 @@ v8 = [] #CNR
 v9 = [] #Confidence
 
 ''' USE IF USING IN TERMINAL WITH COMMAND LINE ARGUMENTS AS FOLDERS '''
-#sourcefolder = directory_name=sys.argv[1]
-#targetfolder = directory_name=sys.argv[2]
+sourcefolder = directory_name=sys.argv[1]
+targetfolder = directory_name=sys.argv[2]
 
 '''USE IF USING IN DESKTOP MODE AND SPECIFY FOLDERS WITH EXACT PATHS'''
+'''
 sourcefolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/'
 targetfolder = '/Users/arnoldas/Desktop/Fall 2016/ASRC/targetfolder/'
 outputfilenameprefix = 'NetCDFData'
+'''
 
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20161002_reconstruction_wind_data.csv', 'r').readlines()
 #sourceFile = open('/Users/arnoldas/Desktop/Fall 2016/ASRC/sourcefolder/20160809_whole_radial_wind_data.csv', 'r').readlines()
@@ -257,6 +259,7 @@ def FormatingDataFromSource(sourceFile):
     rootgrp.close()
     #sourceFile.close()
 
+#only adds files ending in .csv from source folder
 entries = (os.path.join(sourcefolder, fn) for fn in os.listdir(sourcefolder) if fn.endswith('.csv'))
 entries = ((os.stat(path), path) for path in entries)
 
